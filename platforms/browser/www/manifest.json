@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "MOAP App",
+  "short_name": "MOAP App",
+  "version": "com.moapsystem.mobi",
+  "description": "MOAP Beneficiary Database",
+  "author": "Abubakari Sherifdeen",
+  "icons": [],
+  "start_url": "index.html"
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+   
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link href="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    
+    <title>MOAP App</title>
+
+    <script type="text/javascript">
+        function configureDropDownLists(ddl1,ddl2) {
+       var northern = ['Sawla-Tuna-Kalba','Mamprugu Moagduri','North Gonja'];
+       var uw = ['Wa Municipal','Wa West','Wa East','Nadowli-Kaleo','Daffiama-Issa-Busie','Jirapa','Lawra','Nandom','Sissala East','Sissala West','Lambusie'];
+       var names = ['John', 'David', 'Sarah'];
+    
+       switch (ddl1.value) {
+           case 'Northern':
+               ddl2.options.length = 0;
+               for (i = 0; i < northern.length; i++) {
+                   createOption(ddl2, northern[i], northern[i]);
+               }
+               break;
+           case 'Upper West':
+               ddl2.options.length = 0; 
+           for (i = 0; i < uw.length; i++) {
+               createOption(ddl2, uw[i], uw[i]);
+               }
+               break;
+               default:
+                   ddl2.options.length = 0;
+               break;
+       }
+    
+    }
+    
+       function createOption(ddl, text, value) {
+           var opt = document.createElement('option');
+           opt.value = value;
+           opt.text = text;
+           ddl.options.add(opt);
+       }
+    </script>
+    
+    <script>
+        var x = document.getElementById("demo");
+        
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        
+        function showPosition(position) {
+            x.innerHTML = position.coords.latitude + 
+            "-" + position.coords.longitude;
+        }
+        </script>
+</head>
+
+<body>
+        <div data-role="page">
+
+                <div data-role="header">
+                  <h1>Moap App</h1>
+                  <a href="#" id="btnAdd" class="button ui-btn-right" data-theme="b" data-icon="plus" onClick="prepareAdd()">Add</a>
+                </div>
+            
+                <div data-role="content">
+                  <form>
+                      <label>First Name</label>
+                      <input type="text" id="fname" name="fname" class="form-control" autofocus required>
+            
+                      <label>Surname</label>
+                      <input type="text" id="surname" name="surname" class="form-control" required>
+            
+                      <label>Gender</label>
+                        <select id="gender" name="gender" class="form-control" required>
+                          <option selected="selected">--Select One--</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+            
+                        <label>Year of Birth</label>
+                        <input type="number" id="yob" name="yob" class="form-control" required>
+                    
+                        <label>Name of Organization</label>
+                        <input type="text" id="group_name" name="group_name" class="form-control" required>
+            
+                        <label>Involved in MOAP Intervention?</label>
+                        <select id="prev_ben" name="prev_ben" class="form-control" required>
+                          <option selected="selected">--Select One--</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+            
+                        <label>House Hold Size</label>
+                        <input type="number" id="hhsize" name="hhsize" class="form-control" required>
+            
+                        <label>GPS Coordinates</label>
+                        <input type="text" id="gps" name="gps" class="form-control" required>
+                       
+                        <label>Value Chain</label>
+                        <select id="value_chain" name="value_chain" class="form-control" required>
+                          <option selected="selected">--Select One--</option>
+                          <option value="Soya Beans">Soya Beans</option>
+                          <option value="Sorghum">Sorghum</option>
+                          <option value="Rice">Rice</option>
+                          <option value="Groundnuts">Groundnuts</option>
+                          <option value="Maize">Mango</option>
+                          <option value="Cashew">Cashew</option>
+                          <option value="Vegetables">Vegetables</option>
+                          <option value="Farmer">Farmer</option>
+                          <option value="Others">Others</option>
+                        </select>
+            
+                        <label>Community</label>
+                        <input type="text" id="community" name="community" class="form-control" required>
+            
+                        <label>Region</label>
+                        <select id="ddl" class="form-control" name="region" onchange="configureDropDownLists(this,document.getElementById('ddl2'))" required>
+                          <option value=""></option>
+                          <option value="Northern">Northern</option>
+                          <option value="Upper West">Upper West</option>
+                        </select>
+            
+                        <label>District</label>
+                        <select id="ddl2" name="district" class="form-control" required>
+                        </select>
+            
+                        <label>Farm Size</label>
+                        <input type="text" id="farm_size" name="farm_size" class="form-control" required>
+                  
+            
+                        <label>Role in Value Chain</label>
+                        <select id="role" class="form-control" name="role" required>
+                          <option selected>--Select One--</option>
+                          <option value="Processor">Processor</option>
+                          <option value="Aggregator">Aggregator</option>
+                          <option value="Input Dealer">Input Dealer</option>
+                          <option value="Research Institute">Research Institute</option>
+                          <option value="Trader">Trader</option>
+                          <option value="MOFA Staff">MOFA Staff</option>
+                          <option value="Agro Service Provider">Agro Service Provider</option>
+                        </select>
+            
+                        <label>Surveyor</label>
+                        <select id="surveyor" name="surveyor" class="form-control" required>
+                          <option selected="selected">--Select One--</option>
+                          <option value="Abu Sherif">Abu Sherif</option>
+                          <option value="Saani Abacha">Saani Abacha</option>
+                        </select>
+                    <input type="hidden" id="id"/>
+            
+                    <div class="ui-body-b ui-body">
+                      <button id="btnSave" type="button" data-inline="true" data-icon="refresh">Save</button>
+                      <button id="btnCancel" type="button" data-inline="true" data-icon="plus" data-theme="c" onClick="cancelAction()">Cancel</button>
+                    </div>
+                  </form>
+            
+                  <div class="ui-body">
+                    <div id="results"></div>
+                  </div>
+                </div>
+            
+                <div data-role="footer">
+                      <h3>MOAP</h3>
+                  <button class="button ui-btn-right" type="button" data-icon="alert" data-theme="e" onClick="dropTable()">Sync Data</button>
+                </div>
+              </div>
+    <script src="assets/vendor/jquery-1.8.3/jquery-1.8.3.js"></script>
+    <script src="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.js"></script>
+    <script src="assets/js/model.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+</body>
+
+</html>
