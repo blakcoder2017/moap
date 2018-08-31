@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content=content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src *" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link href="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.css" rel="stylesheet">
+
+
+    <title>Add Trainee</title>
+    <script type="text/javascript">
+        var shortName = 'moapdb';
+        var version = '1.0';
+        var displayName = 'Moap Database';
+        var maxSizeInBytes = 2222222;
+        db = openDatabase(shortName, version, displayName, maxSizeInBytes);
+
+        function getRecords(){
+           db.transaction(function(tx) {
+               tx.executeSql('SELECT * FROM prev',[], function(tx, results){
+                   var len = results.rows.length, i;
+                   var html = "<select name=\"selectBen\">";
+                    for (i = 0; i < len; i++){
+                        html += "<option value='" + results.rows.item(i).benid + "'>" + results.rows.item(i).fname + ' ' + results.rows.item(i).surname + "</option>";
+                        html += "</select>";
+                        var el = document.getElementById("selectBen");
+                        el.innerHTML = html
+                    }
+               });
+           });
+
+            db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM training',[], function(tx, results){
+            var len = results.rows.length, i;
+            var html = "<select name=\"selectTrain\">";
+                for (i = 0; i < len; i++){ html +="<option value='" + results.rows.item(i).tid + "'>" + results.rows.item(i).title + "</option>" ; 
+                    html +="</select>" ; 
+                    var el=document.getElementById("selectTrain");
+                    el.innerHTML=html 
+                } 
+            }); 
+        });
+        }
+
+       function getId(){
+           var selben = document.getElementById("selectBen").value;
+           var bee = document.getElementById("benid");
+           bee.value = selben;
+       }
+
+       function getTrain(){
+            var seltrain = document.getElementById("selectTrain").value;
+            var train = document.getElementById("trainid");
+            train.value = seltrain;
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM training WHERE tid="'+seltrain+'"', [], function(tx, results) {
+                    document.getElementById("title").value =results.rows[0].title;
+                    document.getElementById("des").value =results.rows[0].description;
+                    document.getElementById("dot").value =results.rows[0].dot;
+                    document.getElementById("venue").value =results.rows[0].venue;
+                });
+            });
+       }
+
+        function goBack(){
+        window.location ="index.html";
+        }
+        
+    </script>
+</head>
+
+<body onload="getRecords()">
+    <div class="container">
+        <div class="moap">
+            <h2>MOAP</h2>
+        </div>
+        <div class="alert alert-success text-center" role="alert">
+            Beneficiary Database
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Add Beneficiary
+            </div>
+            <div class="card-block">
+                <div data-role="page">
+
+                    <div data-role="header">
+                        <h1>Trainees</h1>
+                        <a href="#" id="btnAdd" class="button ui-btn-right" data-theme="b" data-icon="plus" onClick="prepareAdd()">Add</a>
+                    </div>
+
+                    <div data-role="content">
+                        <form>
+                        <label>Select Beneficiary</label>
+                        <select onchange="getId()" id="selectBen" class="form-control" name="selectBen" required>
+                            <option selected>--Select One--</option>
+                        </select>
+                        <input type="text" id="benid" name="benid" readonly class="form-control" required>
+                        <label>Select Training</label>
+                        <select onchange="getTrain()" id="selectTrain" class="form-control" name="selectTrain" required>
+                            <option selected>--Select One--</option>
+                        </select>
+                        <input type="hidden" id="trainid" name="trainid" readonly class="form-control" required>
+                            <label>Training Title</label>
+                            <input type="text" id="title" name="title" class="form-control" readonly required>
+
+                            <label>Description</label>
+                            <input type="text" id="des" name="des" class="form-control" readonly required>
+
+                            <label>Date/Time</label>
+                            <input type="text" id="dot" name="dot" readonly class="form-control" required>
+
+                            <label>Venue</label>
+                            <input type="text" id="venue" name="venue" readonly class="form-control" required>
+
+                            <div class="ui-body-b ui-body">
+                                <button id="btnSave" type="button" data-inline="true" data-icon="refresh">Save</button>
+                                <button id="btnCancel" type="button" data-inline="true" data-icon="plus" data-theme="c"
+                                    onClick="cancelAction()">Cancel</button>
+                            </div>
+                        </form>
+
+                        <div class="ui-body">
+                            <div id="results"></div>
+                        </div>
+                    </div>
+
+                    <div data-role="footer">
+                        <h3>MOAP</h3>
+                        <button class="button ui-btn-right" type="button" data-icon="alert" data-theme="e" onClick="goBack()">Back
+                            Home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/vendor/jquery-1.8.3/jquery-1.8.3.js"></script>
+    <script src="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.js"></script>
+    <script src="assets/js/train.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

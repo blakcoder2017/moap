@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content=content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src *"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link href="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.css" rel="stylesheet">
+   
+
+    <title>MOAP App</title>
+    <script>
+        function gotoAdd(){
+            window.location = "addben.html";
+        }
+
+        function gotoTrain(){
+            window.location = "training.html";
+        }
+    </script>
+    
+</head>
+
+<body onload="createAll()">
+     <div class="container">
+        <div class="moap">
+            <h2>MOAP</h2>
+        </div>
+        <div class="alert alert-success text-center" role="alert">
+            Beneficiary Database
+        </div>
+        
+        <div class="logo1">
+            <img src="./img/icon-152x152.png" />
+        </div>
+        <br/>
+        <div class="card">
+            <div class="card-body text-center">
+                <button type="button" onclick="gotoAdd()" class="btn btn-lg btn-block btn-success"><i class="fas fa-user-plus"></i>Add Beneficiary</button><br/>
+                <button type="button" onclick="gotoTrain()" class="btn btn-lg btn-block btn-success"><i class="fas fa-user-plus"></i>Training</button><br/>
+                <button type="button" onclick="dropTable()" class="btn btn-lg btn-block btn-success">Sync</button><br />
+                <button type="button" onclick="loadData()" class="btn btn-lg btn-block btn-success">Update</button><br/>
+    
+                
+            </div>
+        </div>
+    </div>
+    <script src="assets/vendor/jquery-1.8.3/jquery-1.8.3.js"></script>
+    <script src="assets/vendor/jquery.mobile-1.2.0/jquery.mobile-1.2.0.js"></script>
+    <script src="assets/js/model.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+</body>
+
+</html>
